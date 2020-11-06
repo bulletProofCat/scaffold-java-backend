@@ -19,14 +19,18 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue
     private Long id;
+    @Column(unique = true)
     private String phone;
-    private String email;
+    @Column(unique = true)
     private String name;
     private String password;
-    private Integer sex;
-    private String avatar;
-    private String departmentId;
-    private int enabled;
+
+    @Column(unique = true)
+    private String email = "";
+    private int sex = 1;
+    private String avatar = "";
+    private String departmentId = "";
+    private int enabled = 1;
 
     private LocalDateTime createTime;
     private LocalDateTime updateTime;

@@ -6,11 +6,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class TestApi implements ErrorController {
+public class CommonErrorController implements ErrorController {
 
     @RequestMapping(method = RequestMethod.GET, path = "/error")
     String test() {
-        return "{test: 1}";
+        return "{error: 1}";
     }
 
     @Override

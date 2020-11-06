@@ -10,13 +10,13 @@ public class RegistrationRequest {
 
     private String password;
 
-    private String phoneNumber;
+    private String phone;
 
     public User toUser(PasswordEncoder passwordEncoder) {
         User user = new User();
         user.setName(name);
         user.setPassword(passwordEncoder.encode(password));
-        user.setPhoneNumber(phoneNumber);
+        user.setPhone(phone);
         return user;
     }
 
