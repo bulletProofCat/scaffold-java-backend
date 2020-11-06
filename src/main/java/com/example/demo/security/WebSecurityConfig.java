@@ -47,10 +47,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/error", "/rest/user/register").permitAll()
                 .anyRequest().authenticated()
-                
+
                 .and()
                 .formLogin()
-                .loginPage("/rest/user/login")
+                .loginPage("/rest/login")
                 .successHandler((request, response, authentication) ->
                         log.info(">>>>login success, custom successHandler is used to prevent redirect")
                 )
