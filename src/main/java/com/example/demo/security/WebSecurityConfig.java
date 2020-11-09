@@ -14,7 +14,12 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 import org.springframework.security.web.authentication.Http403ForbiddenEntryPoint;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+
+import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
@@ -25,9 +30,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserDetailsService userService;
 
+    @Autowired
+    private DataSource dataSource;
+
+    @Autowired
+    private CheckPostOriginFilter checkPostOriginFilter;
+
+    @Bean
+    public PersistentTokenRepository getTokenRepository() {
+        JdbcTokenRepositoryImpl jdbcTokenRepository = new JdbcTokenRepositoryImpl();
+        jdbcTokenRepository.setDataSource(dataSource);
+        return jdbcTokenRepository;
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .addFilterBefore(checkPostOriginFilter, ChannelProcessingFilter.class)
                 // disable redirection on auth denial
                 .exceptionHandling()
                 .authenticationEntryPoint(new Http403ForbiddenEntryPoint())
@@ -40,10 +59,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 // simple default rememberMe config, no database is required
                 .rememberMe()
+                .tokenRepository(getTokenRepository())
                 .key("0bdd037f-5511-46af-a674-26c2c2aa8cc4")
                 .and()
 
-                .userDetailsService(userDetailsService())
+//                .userDetailsService(userDetailsService())
                 .authorizeRequests()
                 .antMatchers("/error", "/rest/user/register").permitAll()
                 .anyRequest().authenticated()
