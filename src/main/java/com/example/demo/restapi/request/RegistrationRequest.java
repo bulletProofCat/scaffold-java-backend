@@ -18,7 +18,7 @@ public class RegistrationRequest {
     @Length(min = 6, message = "密码至少6位")
     private String password;
 
-    @Pattern(regexp = "\\d+", message = "请输出合法的手机号")
+    @Pattern(regexp = "\\d+", message = "请输入合法的手机号")
     private String phone;
 
     public User toUser(PasswordEncoder passwordEncoder) {

@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * 为了避免rest接口的scrf问题，需要检查所有post请求的origin头，确保请求是由我们自己域名下的页面发来的
+ */
 @Component
 @Slf4j
 public class CheckPostOriginFilter extends GenericFilterBean {

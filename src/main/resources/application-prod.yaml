@@ -1,0 +1,4 @@
+springfox:
+  documentation:
+    #默认启用spring fox，但需要在release时关闭
+    enabled: false

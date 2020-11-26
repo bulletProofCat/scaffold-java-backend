@@ -1,4 +1,4 @@
-package com.example.demo.response;
+package com.example.demo.restapi.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -57,26 +57,27 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
 
-                // simple default rememberMe config, no database is required
+                // 这里使用的是持久化的remember-me，配置的key没有作用
                 .rememberMe()
                 .tokenRepository(getTokenRepository())
                 .key("0bdd037f-5511-46af-a674-26c2c2aa8cc4")
                 .and()
 
-//                .userDetailsService(userDetailsService())
+                // 默认permit all，所有敏感接口都应该使用@Secured注解来保护
                 .authorizeRequests()
-                .antMatchers("/error", "/rest/user/register").permitAll()
-                .anyRequest().authenticated()
-
+                .anyRequest().permitAll()
+//                .antMatchers("/error", "/rest/user/register").permitAll()
+//                .anyRequest().authenticated()
                 .and()
+
                 .formLogin()
                 .loginPage("/rest/login")
                 .successHandler((request, response, authentication) ->
                         log.info(">>>>login success, custom successHandler is used to prevent redirect")
                 )
                 .permitAll()
-
                 .and()
+
                 .logout()
                 .permitAll()
 

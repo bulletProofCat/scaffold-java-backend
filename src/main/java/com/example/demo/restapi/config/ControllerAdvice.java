@@ -1,6 +1,6 @@
 package com.example.demo.restapi.config;
 
-import com.example.demo.response.BaseResponse;
+import com.example.demo.restapi.response.BaseResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -14,6 +14,9 @@ import java.util.List;
 @RestControllerAdvice
 public class ControllerAdvice  {
 
+    /**
+     * 对接口入参进行JSR 303校验失败时的exception handler
+     */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(value = {MethodArgumentNotValidException.class})
     public BaseResponse handleValidationError(MethodArgumentNotValidException exception) {
@@ -31,6 +34,4 @@ public class ControllerAdvice  {
 
         return BaseResponse.error(BaseResponse.ERROR_PARAM_VALIDATION_FAIL, sb.toString());
     }
-
-
 }

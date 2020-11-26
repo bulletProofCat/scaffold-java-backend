@@ -14,8 +14,6 @@ import java.util.Collection;
 @Table
 @Data
 public class User implements UserDetails {
-    private static final long serialVersionUID = 1;
-
     @Id
     @GeneratedValue
     private Long id;
